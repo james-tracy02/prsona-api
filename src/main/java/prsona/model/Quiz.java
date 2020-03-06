@@ -1,31 +1,37 @@
 package prsona.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="CATEGORY")
-public class Category {
+@Table(name="QUIZ")
+public class Quiz {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private String name;
+	private String author;
 	private String resourceURL;
 	private String description;
-	private Quiz quiz;
+	@OneToMany(mappedBy="quiz")
+	private List<Question> questions;
+	@OneToMany(mappedBy="quiz")
+	private List<Category> categories;
 	
 	public int getId() {
-		return id;
+		return this.id;
 	}
 	
 	public void setId(int id) {
 		this.id = id;
 	}
-
 
 	public String getName() {
 		return name;
@@ -35,12 +41,12 @@ public class Category {
 		this.name = name;
 	}
 
-	public String getResourceURL() {
-		return resourceURL;
+	public String getAuthor() {
+		return author;
 	}
 
-	public void setResourceURL(String resourceURL) {
-		this.resourceURL = resourceURL;
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 
 	public String getDescription() {
@@ -50,12 +56,20 @@ public class Category {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	public Quiz getQuiz() {
-		return quiz;
+	
+	public List<Question> getQuestions() {
+		return questions;
+	}
+	
+	public List<Category> getCategories() {
+		return categories;
 	}
 
-	public void setQuiz(Quiz quiz) {
-		this.quiz = quiz;
+	public String getResourceURL() {
+		return resourceURL;
+	}
+
+	public void setResourceURL(String resourceURL) {
+		this.resourceURL = resourceURL;
 	}
 }
