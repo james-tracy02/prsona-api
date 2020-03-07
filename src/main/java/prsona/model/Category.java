@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -17,7 +18,9 @@ public class Category {
 	private String name;
 	private String resourceURL;
 	private String description;
+	private int index;
 	@ManyToOne
+	@JoinColumn
 	private Quiz quiz;
 	
 	public int getId() {
@@ -59,5 +62,13 @@ public class Category {
 
 	public void setQuiz(Quiz quiz) {
 		this.quiz = quiz;
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
 	}
 }

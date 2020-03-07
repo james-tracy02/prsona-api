@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -18,9 +19,10 @@ public class Question {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private String text;
-	private String resourceUrl;
+	private String resourceURL;
 	private QuestionType type;
 	@ManyToOne
+	@JoinColumn
 	private Quiz quiz;
 	@OneToMany(mappedBy="question")
 	private List<Answer> answers;
@@ -53,12 +55,12 @@ public class Question {
 		return answers;
 	}
 
-	public String getResourceUrl() {
-		return resourceUrl;
+	public String getResourceURL() {
+		return resourceURL;
 	}
 
-	public void setResourceUrl(String resourceUrl) {
-		this.resourceUrl = resourceUrl;
+	public void setResourceURL(String resourceURL) {
+		this.resourceURL = resourceURL;
 	}
 	
 	public QuestionType getType() {

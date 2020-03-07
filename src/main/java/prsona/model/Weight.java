@@ -14,7 +14,7 @@ public class Weight {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	private int categoryId;
+	private int categoryIndex;
 	@ManyToOne
 	private Answer answer;
 	private int weight;
@@ -27,12 +27,12 @@ public class Weight {
 		this.id = id;
 	}
 	
-	public int getCategoryId() {
-		return categoryId;
+	public int getCategoryIndex() {
+		return categoryIndex;
 	}
 	
 	public void setCategoryId(int categoryId) {
-		this.categoryId = categoryId;
+		this.categoryIndex = categoryId;
 	}
 	
 	public Answer getAnswer() {
