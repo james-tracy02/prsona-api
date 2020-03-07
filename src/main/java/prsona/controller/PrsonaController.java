@@ -1,5 +1,6 @@
 package prsona.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +13,21 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import prsona.model.Answer;
+import prsona.model.Category;
+import prsona.model.Question;
 import prsona.model.Quiz;
+import prsona.model.Weight;
+import prsona.repository.CategoryRepository;
+import prsona.repository.QuestionRepository;
 import prsona.repository.QuizRepository;
 
 @CrossOrigin
 @RestController
-public class QuizController {
+public class PrsonaController {
 	
 	@Autowired
-	QuizRepository quizRepository;	
+	QuizRepository quizRepository;
 	
 	@GetMapping("/quizzes/{id}")
 	public Optional<Quiz> findQuizById(@PathVariable int id) {
@@ -34,6 +41,18 @@ public class QuizController {
 	
 	@PostMapping("/quizzes")
 	public Quiz createQuiz(@RequestBody Quiz quiz) {
+		for(Question question : quiz.getQuestions()) {
+			question.setQuiz(quiz);
+			for(Answer answer : question.getAnswers()) {
+				answer.setQuestion(question);
+				for(Weight weight : answer.getWeights()) {
+					weight.setAnswer(answer);
+				}
+			}
+		}
+		for(Category category : quiz.getCategories()) {
+			category.setQuiz(quiz);
+		}
 		return quizRepository.save(quiz);
 	}
 	
