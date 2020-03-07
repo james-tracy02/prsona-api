@@ -18,9 +18,11 @@ import prsona.model.Category;
 import prsona.model.Question;
 import prsona.model.Quiz;
 import prsona.model.Weight;
+import prsona.repository.AnswerRepository;
 import prsona.repository.CategoryRepository;
 import prsona.repository.QuestionRepository;
 import prsona.repository.QuizRepository;
+import prsona.repository.WeightRepository;
 
 @CrossOrigin
 @RestController
@@ -28,6 +30,14 @@ public class PrsonaController {
 	
 	@Autowired
 	QuizRepository quizRepository;
+	@Autowired
+	QuestionRepository questionRepository;
+	@Autowired
+	AnswerRepository answerRepository;
+	@Autowired
+	WeightRepository weightRepository;
+	@Autowired
+	CategoryRepository categoryRepository;
 	
 	@GetMapping("/quizzes/{id}")
 	public Optional<Quiz> findQuizById(@PathVariable int id) {
@@ -43,15 +53,19 @@ public class PrsonaController {
 	public Quiz createQuiz(@RequestBody Quiz quiz) {
 		for(Question question : quiz.getQuestions()) {
 			question.setQuiz(quiz);
+			questionRepository.save(question);
 			for(Answer answer : question.getAnswers()) {
 				answer.setQuestion(question);
+				answerRepository.save(answer);
 				for(Weight weight : answer.getWeights()) {
 					weight.setAnswer(answer);
+					weightRepository.save(weight);
 				}
 			}
 		}
 		for(Category category : quiz.getCategories()) {
 			category.setQuiz(quiz);
+			categoryRepository.save(category);
 		}
 		return quizRepository.save(quiz);
 	}
