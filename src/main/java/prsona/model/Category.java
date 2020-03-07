@@ -18,7 +18,7 @@ public class Category {
 	private String name;
 	private String resourceURL;
 	private String description;
-	private int index;
+	private int categoryIndex;
 	@ManyToOne
 	@JoinColumn
 	private Quiz quiz;
@@ -64,11 +64,11 @@ public class Category {
 		this.quiz = quiz;
 	}
 
-	public int getIndex() {
-		return index;
+	public int getCategoryIndex() {
+		return categoryIndex;
 	}
 
-	public void setIndex(int index) {
-		this.index = index;
+	public void setCategoryIndex(int categoryIndex) {
+		this.categoryIndex = categoryIndex;
 	}
 }
