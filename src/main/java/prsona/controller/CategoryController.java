@@ -55,7 +55,7 @@ public class CategoryController {
 	}
 	
 	@PutMapping("/categories/{id}")
-	public Category question(@PathVariable int id, @RequestBody Category category) {
+	public Category updateCategory(@PathVariable int id, @RequestBody Category category) {
 		category.setId(id);
 		return categoryRepository.save(category);
 	}

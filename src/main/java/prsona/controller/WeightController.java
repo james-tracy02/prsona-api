@@ -55,7 +55,7 @@ public class WeightController {
 	}
 
 	@PutMapping("/weights/{id}")
-	public Weight question(@PathVariable int id, @RequestBody Weight weight) {
+	public Weight updateWeight(@PathVariable int id, @RequestBody Weight weight) {
 		weight.setId(id);
 		return weightRepository.save(weight);
 	}
