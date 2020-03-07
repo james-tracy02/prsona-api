@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="WEIGHT")
 public class Weight {
@@ -16,6 +18,7 @@ public class Weight {
 	private int id;
 	private int categoryIndex;
 	@ManyToOne
+	@JsonIgnore
 	private Answer answer;
 	private int weight;
 	

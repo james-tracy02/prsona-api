@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="ANSWER")
 public class Answer {
@@ -20,7 +22,7 @@ public class Answer {
 	private int id;
 	private String text;
 	@ManyToOne
-	@JoinColumn
+	@JsonIgnore
 	private Question question;
 	@OneToMany(mappedBy="answer")
 	private List<Weight> weights;

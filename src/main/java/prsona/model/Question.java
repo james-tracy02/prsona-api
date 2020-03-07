@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="QUESTION")
 public class Question {
@@ -22,7 +24,7 @@ public class Question {
 	private String resourceURL;
 	private QuestionType type;
 	@ManyToOne
-	@JoinColumn
+	@JsonIgnore
 	private Quiz quiz;
 	@OneToMany(mappedBy="question")
 	private List<Answer> answers;
