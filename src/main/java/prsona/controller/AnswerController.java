@@ -54,7 +54,7 @@ public class AnswerController {
 		return null;
 	}
 	
-	@PutMapping("/categories/{id}")
+	@PutMapping("/answers/{id}")
 	public Answer updateAnswer(@PathVariable int id, @RequestBody Answer answer) {
 		answer.setId(id);
 		return answerRepository.save(answer);
