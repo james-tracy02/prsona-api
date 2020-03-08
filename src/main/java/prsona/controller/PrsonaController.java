@@ -53,19 +53,15 @@ public class PrsonaController {
 	public Quiz createQuiz(@RequestBody Quiz quiz) {
 		for(Question question : quiz.getQuestions()) {
 			question.setQuiz(quiz);
-			questionRepository.save(question);
 			for(Answer answer : question.getAnswers()) {
 				answer.setQuestion(question);
-				answerRepository.save(answer);
 				for(Weight weight : answer.getWeights()) {
 					weight.setAnswer(answer);
-					weightRepository.save(weight);
 				}
 			}
 		}
 		for(Category category : quiz.getCategories()) {
 			category.setQuiz(quiz);
-			categoryRepository.save(category);
 		}
 		return quizRepository.save(quiz);
 	}

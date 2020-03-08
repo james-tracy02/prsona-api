@@ -2,6 +2,7 @@ package prsona.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,7 +26,7 @@ public class Question {
 	@ManyToOne
 	@JsonIgnore
 	private Quiz quiz;
-	@OneToMany(mappedBy="question")
+	@OneToMany(mappedBy="question", cascade = CascadeType.ALL)
 	private List<Answer> answers;
 	
 	public int getId() {
