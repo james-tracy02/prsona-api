@@ -1,6 +1,5 @@
 package prsona.controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +68,18 @@ public class PrsonaController {
 	@PutMapping("/quizzes/{id}")
 	public Quiz updateQuiz(@PathVariable int id, @RequestBody Quiz quiz) {
 		quiz.setId(id);
+		for(Question question : quiz.getQuestions()) {
+			question.setQuiz(quiz);
+			for(Answer answer : question.getAnswers()) {
+				answer.setQuestion(question);
+				for(Weight weight : answer.getWeights()) {
+					weight.setAnswer(answer);
+				}
+			}
+		}
+		for(Category category : quiz.getCategories()) {
+			category.setQuiz(quiz);
+		}
 		return quizRepository.save(quiz);
 	}
 	
