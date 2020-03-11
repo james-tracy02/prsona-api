@@ -80,7 +80,6 @@ public class PrsonaController {
 			category.setQuiz(quiz);
 		}
 		quizRepository.deleteById(id);
-		quiz.setId(id);
 		return quizRepository.save(quiz);
 	}
 	
