@@ -67,7 +67,6 @@ public class PrsonaController {
 	
 	@PutMapping("/quizzes/{id}")
 	public Quiz updateQuiz(@PathVariable int id, @RequestBody Quiz quiz) {
-		quiz.setId(id);
 		for(Question question : quiz.getQuestions()) {
 			question.setQuiz(quiz);
 			for(Answer answer : question.getAnswers()) {
@@ -80,6 +79,8 @@ public class PrsonaController {
 		for(Category category : quiz.getCategories()) {
 			category.setQuiz(quiz);
 		}
+		quizRepository.deleteById(id);
+		quiz.setId(id);
 		return quizRepository.save(quiz);
 	}
 	
