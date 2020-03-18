@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import prsona.model.Answer;
@@ -37,6 +38,8 @@ public class PrsonaController {
 	WeightRepository weightRepository;
 	@Autowired
 	CategoryRepository categoryRepository;
+	@Autowired
+	UserController userController;
 	
 	@GetMapping("/quizzes/{id}")
 	public Optional<Quiz> findQuizById(@PathVariable int id) {
@@ -66,7 +69,14 @@ public class PrsonaController {
 	}
 	
 	@PutMapping("/quizzes/{id}")
-	public Quiz updateQuiz(@PathVariable int id, @RequestBody Quiz quiz) {
+	public Quiz updateQuiz(@PathVariable int id, @RequestBody Quiz quiz, @RequestHeader("authorization") String authToken) {
+		Optional<Quiz> quizOpt = quizRepository.findById(id);
+		if(!quizOpt.isPresent()) {
+			return null;
+		}
+		if(!userController.matchUser(quizOpt.get().getAuthor(), authToken)) {
+			return null;
+		}
 		for(Question question : quiz.getQuestions()) {
 			question.setQuiz(quiz);
 			for(Answer answer : question.getAnswers()) {
@@ -84,7 +94,14 @@ public class PrsonaController {
 	}
 	
 	@DeleteMapping("/quizzes/{id}")
-	public void deleteQuiz(@PathVariable int id) {
+	public void deleteQuiz(@PathVariable int id, @RequestHeader("authorization") String authToken) {
+		Optional<Quiz> quizOpt = quizRepository.findById(id);
+		if(!quizOpt.isPresent()) {
+			return;
+		}
+		if(!userController.matchUser(quizOpt.get().getAuthor(), authToken)) {
+			return;
+		}
 		quizRepository.deleteById(id);
 	}
 }
