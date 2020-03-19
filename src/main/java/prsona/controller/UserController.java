@@ -24,6 +24,19 @@ public class UserController {
 		userRepository.save(user);
 	}
 	
+	@PostMapping("/login")
+	public User login(@RequestBody User user) {
+		Optional<User> userOpt = userRepository.findByUsername(user.getUsername());
+		if(!userOpt.isPresent()) {
+			return null;
+		}
+		User target = userOpt.get();
+		if(target.getPassword() == user.getPassword()) {
+			return target;
+		}
+		return null;
+	}
+	
 	public boolean matchUser(String username, String token) {
 		Optional<User> targetOpt = userRepository.findByUsername(username);
 		if(!targetOpt.isPresent()) {
