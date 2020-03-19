@@ -25,14 +25,16 @@ public class UserController {
 	}
 	
 	@PostMapping("/login")
-	public User login(@RequestBody User user) {
+	public String login(@RequestBody User user) {
 		Optional<User> userOpt = userRepository.findByUsername(user.getUsername());
 		if(!userOpt.isPresent()) {
 			return null;
 		}
 		User target = userOpt.get();
 		if(target.getPassword() == user.getPassword()) {
-			return target;
+			String unencoded = target.getUsername() + ":" + target.getPassword();
+			byte[] encodedBytes = Base64.getEncoder().encode(unencoded.getBytes());
+			return new String(encodedBytes);
 		}
 		return null;
 	}
