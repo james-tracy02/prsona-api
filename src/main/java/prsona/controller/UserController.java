@@ -28,7 +28,7 @@ public class UserController {
 	public String login(@RequestBody User user) {
 		Optional<User> userOpt = userRepository.findByUsername(user.getUsername());
 		if(!userOpt.isPresent()) {
-			return null;
+			return "user not present";
 		}
 		User target = userOpt.get();
 		if(target.getPassword() == user.getPassword()) {
@@ -36,7 +36,7 @@ public class UserController {
 			byte[] encodedBytes = Base64.getEncoder().encode(unencoded.getBytes());
 			return new String(encodedBytes);
 		}
-		return null;
+		return "user didnt match";
 	}
 	
 	public boolean matchUser(String username, String token) {
