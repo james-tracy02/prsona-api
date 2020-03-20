@@ -31,7 +31,7 @@ public class UserController {
 			return "user not present";
 		}
 		User target = userOpt.get();
-		if(target.getPassword() == user.getPassword()) {
+		if(target.getPassword().equals(user.getPassword())) {
 			String unencoded = target.getUsername() + ":" + target.getPassword();
 			byte[] encodedBytes = Base64.getEncoder().encode(unencoded.getBytes());
 			return new String(encodedBytes);
